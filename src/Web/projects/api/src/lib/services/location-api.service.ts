@@ -11,8 +11,8 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class LocationApiService {
-  private http = inject(HttpClient);
-  private baseUrl = inject(API_BASE_URL);
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = inject(API_BASE_URL);
 
   getCurrentLocation(): Observable<TruckLocation> {
     return this.http.get<TruckLocation>(`${this.baseUrl}/api/location/truck/current`);

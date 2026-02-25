@@ -14,8 +14,10 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "preserve",
+    "baseUrl": "./",
     "paths": {
-      "@junkfroot/api": ["projects/api/src/public-api.ts"]
+      "@junkfroot/api": ["projects/api/src/public-api.ts"],
+      "@junkfroot/components": ["projects/components/src/public-api.ts"]
     }
   },
   "angularCompilerOptions": {
