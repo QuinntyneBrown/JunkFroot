@@ -1,5 +1,7 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { AuthApiService, AppUser, AuthTokens } from '@junkfroot/api';
+import { AuthApiService, AuthResponse } from '@junkfroot/api';
+import { setAccessToken, getAccessToken, clearAccessToken } from '@junkfroot/api';
+import type { AppUser } from '@junkfroot/api';
 
 interface AuthState {
   user: AppUser | null;
@@ -13,7 +15,7 @@ export class AuthStore {
 
   private readonly state = signal<AuthState>({
     user: null,
-    token: typeof window !== 'undefined' ? localStorage.getItem('access_token') : null,
+    token: getAccessToken(),
     loading: false,
   });
 
@@ -24,7 +26,7 @@ export class AuthStore {
   login(email: string, password: string): void {
     this.state.update((s) => ({ ...s, loading: true }));
     this.authApi.login({ email, password }).subscribe({
-      next: (tokens) => this.handleTokens(tokens),
+      next: (response) => this.handleAuthResponse(response),
       error: () => {
         this.state.update((s) => ({ ...s, loading: false }));
       },
@@ -34,7 +36,7 @@ export class AuthStore {
   register(email: string, password: string, name: string): void {
     this.state.update((s) => ({ ...s, loading: true }));
     this.authApi.register({ email, password, name }).subscribe({
-      next: (tokens) => this.handleTokens(tokens),
+      next: (response) => this.handleAuthResponse(response),
       error: () => {
         this.state.update((s) => ({ ...s, loading: false }));
       },
@@ -42,15 +44,16 @@ export class AuthStore {
   }
 
   logout(): void {
-    localStorage.removeItem('access_token');
+    clearAccessToken();
     this.state.set({ user: null, token: null, loading: false });
   }
 
-  private handleTokens(tokens: AuthTokens): void {
-    localStorage.setItem('access_token', tokens.accessToken);
+  private handleAuthResponse(response: AuthResponse): void {
+    setAccessToken(response.accessToken);
     this.state.update((s) => ({
       ...s,
-      token: tokens.accessToken,
+      user: response.user,
+      token: response.accessToken,
       loading: false,
     }));
   }

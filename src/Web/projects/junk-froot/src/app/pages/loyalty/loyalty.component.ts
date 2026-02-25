@@ -52,8 +52,8 @@ export class LoyaltyComponent implements OnInit {
     this.loyaltyApi.getCard().subscribe({
       next: (c) => {
         this.card.set({
-          punches: c.punches,
-          punchesRequired: c.punchesRequired,
+          punches: c.punchCount,
+          punchesRequired: c.totalPunches,
           referralCode: c.referralCode,
         });
       },
@@ -66,8 +66,7 @@ export class LoyaltyComponent implements OnInit {
             id: reward.id,
             name: reward.name,
             description: reward.description,
-            isRedeemed: reward.isRedeemed,
-            expiresAt: reward.expiresAt,
+            isRedeemed: !reward.isActive,
           }))
         );
       },

@@ -49,7 +49,7 @@ export class FindUsComponent implements OnInit {
         this.latitude.set(loc.latitude);
         this.longitude.set(loc.longitude);
         this.address.set(loc.address);
-        this.isOperating.set(loc.isOperating);
+        this.isOperating.set(loc.estimatedCloseTime !== null);
         this.estimatedClose.set(loc.estimatedCloseTime ?? '');
       },
     });

@@ -19,7 +19,6 @@ function toProductViewModel(p: Product): ProductViewModel {
     ingredients: p.ingredients?.map((i) => ({
       name: i.ingredient.name,
       isAllergen: i.ingredient.isAllergen,
-      allergenType: i.ingredient.allergenType,
     })),
   };
 }

@@ -54,7 +54,6 @@ export class ProductComponent implements OnInit {
           ingredients: p.ingredients?.map((i) => ({
             name: i.ingredient.name,
             isAllergen: i.ingredient.isAllergen,
-            allergenType: i.ingredient.allergenType,
           })),
         });
         this.loading.set(false);

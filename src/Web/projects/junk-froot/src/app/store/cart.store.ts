@@ -64,7 +64,7 @@ export class CartStore {
   }
 
   updateQuantity(itemId: string, quantity: number): void {
-    this.orderApi.updateCartItem(itemId, quantity).subscribe({
+    this.orderApi.updateCartItem(itemId, { quantity }).subscribe({
       next: (cart) => {
         this.state.set({
           items: cart.items,
