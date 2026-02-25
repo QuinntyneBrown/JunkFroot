@@ -89,9 +89,9 @@ public static class PaymentEndpoints
 
     private static string GenerateOrderNumber()
     {
-        var timestamp = DateTime.UtcNow.ToString("yyyyMMdd");
-        var random = Random.Shared.Next(1000, 9999);
-        return $"JF-{timestamp}-{random}";
+        var timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+        var uniquePart = Guid.NewGuid().ToString("N")[..8].ToUpperInvariant();
+        return $"JF-{timestamp}-{uniquePart}";
     }
 }
 

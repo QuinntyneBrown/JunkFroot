@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../config/api.config';
-import { Category, ComboOffer, Product } from '../models';
+import { Category, ComboOffer, Product, SeasonalDrop } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class CatalogApiService {
@@ -14,7 +14,7 @@ export class CatalogApiService {
   }
 
   getProduct(slug: string): Observable<Product> {
-    return this.http.get<Product>(`${this.baseUrl}/api/catalog/products/${slug}`);
+    return this.http.get<Product>(`${this.baseUrl}/api/catalog/products/by-slug/${slug}`);
   }
 
   getFeaturedProducts(): Observable<Product[]> {
@@ -39,5 +39,9 @@ export class CatalogApiService {
 
   updateProduct(id: string, product: Partial<Product>): Observable<Product> {
     return this.http.put<Product>(`${this.baseUrl}/api/catalog/products/${id}`, product);
+  }
+
+  getSeasonalDrops(): Observable<SeasonalDrop[]> {
+    return this.http.get<SeasonalDrop[]>(`${this.baseUrl}/api/catalog/seasonal-drops`);
   }
 }

@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 builder.AddNpgsqlDbContext<IdentityDbContext>("identity-db");
 builder.AddRedisDistributedCache("redis");
+builder.AddAzureBlobClient("blobs");
 
 builder.Services.AddIdentityCore<AppUser>(options =>
     {
@@ -26,7 +27,9 @@ builder.Services.AddIdentityCore<AppUser>(options =>
     .AddEntityFrameworkStores<IdentityDbContext>()
     .AddDefaultTokenProviders();
 
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "JunkfrootSuperSecretKeyThatShouldBeReplacedInProduction2026!";
+var jwtKey = builder.Configuration["Jwt:Key"]
+    ?? throw new InvalidOperationException(
+        "JWT signing key is not configured. Set 'Jwt:Key' via environment variable, user secrets, or Aspire parameters.");
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>

@@ -1,9 +1,11 @@
+using System.Text;
 using Junkfroot.LoyaltyService.Consumers;
 using Junkfroot.LoyaltyService.Data;
 using Junkfroot.LoyaltyService.Endpoints;
 using Junkfroot.ServiceDefaults;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,17 +27,22 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
+var jwtKey = builder.Configuration["Jwt:Key"]
+    ?? throw new InvalidOperationException(
+        "JWT signing key is not configured. Set 'Jwt:Key' via Aspire parameters.");
+
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
-        options.Authority = builder.Configuration["Jwt:Authority"];
         options.TokenValidationParameters = new()
         {
             ValidateIssuer = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"] ?? "junkfroot-identity",
             ValidateAudience = true,
             ValidAudience = builder.Configuration["Jwt:Audience"] ?? "junkfroot-api",
-            ValidateLifetime = true
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
         };
     });
 builder.Services.AddAuthorization();

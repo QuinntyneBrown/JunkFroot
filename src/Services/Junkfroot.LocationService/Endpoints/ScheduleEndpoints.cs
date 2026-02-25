@@ -24,7 +24,8 @@ public static class ScheduleEndpoints
 
         group.MapGet("/today", async (LocationDbContext db) =>
         {
-            var today = DateTime.Now.DayOfWeek;
+            var easternZone = TimeZoneInfo.FindSystemTimeZoneById("America/Toronto");
+            var today = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, easternZone).DayOfWeek;
 
             var schedule = await db.OperatingSchedules
                 .FirstOrDefaultAsync(s => s.DayOfWeek == today);

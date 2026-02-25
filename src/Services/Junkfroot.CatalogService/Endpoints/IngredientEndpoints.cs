@@ -1,5 +1,4 @@
 using Junkfroot.CatalogService.Data;
-using Junkfroot.CatalogService.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Junkfroot.CatalogService.Endpoints;
@@ -33,16 +32,5 @@ public static class IngredientEndpoints
         .WithName("GetAllergens")
         .Produces<List<Ingredient>>();
 
-        group.MapGet("/combos", async (CatalogDbContext db) =>
-        {
-            var combos = await db.ComboOffers
-                .Include(c => c.Products).ThenInclude(cp => cp.Product)
-                .Where(c => c.IsActive)
-                .ToListAsync();
-
-            return Results.Ok(combos);
-        })
-        .WithName("GetCombos")
-        .Produces<List<ComboOffer>>();
     }
 }

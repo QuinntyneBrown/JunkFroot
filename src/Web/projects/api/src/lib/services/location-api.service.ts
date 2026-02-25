@@ -1,21 +1,31 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import * as signalR from '@microsoft/signalr';
 import { API_BASE_URL } from '../config/api.config';
 import {
   CateringRequest,
   EventBooking,
   OperatingSchedule,
   TruckLocation,
+  TruckLocationUpdate,
 } from '../models/location.model';
 
 @Injectable({ providedIn: 'root' })
 export class LocationApiService {
   private http = inject(HttpClient);
   private baseUrl = inject(API_BASE_URL);
+  private hubConnection: signalR.HubConnection | null = null;
 
   getCurrentLocation(): Observable<TruckLocation> {
     return this.http.get<TruckLocation>(`${this.baseUrl}/api/location/truck/current`);
+  }
+
+  updateTruckLocation(update: TruckLocationUpdate): Observable<TruckLocation> {
+    return this.http.post<TruckLocation>(
+      `${this.baseUrl}/api/location/truck/update`,
+      update
+    );
   }
 
   getSchedule(): Observable<OperatingSchedule[]> {
@@ -39,5 +49,29 @@ export class LocationApiService {
       `${this.baseUrl}/api/location/catering/request`,
       request
     );
+  }
+
+  connectToLocationHub(): Observable<TruckLocationUpdate> {
+    const subject = new Subject<TruckLocationUpdate>();
+
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(`${this.baseUrl}/hubs/truck-location`)
+      .withAutomaticReconnect()
+      .build();
+
+    this.hubConnection.on('LocationUpdated', (update: TruckLocationUpdate) => {
+      subject.next(update);
+    });
+
+    this.hubConnection
+      .start()
+      .catch((err) => subject.error(err));
+
+    return subject.asObservable();
+  }
+
+  disconnectFromLocationHub(): void {
+    this.hubConnection?.stop();
+    this.hubConnection = null;
   }
 }

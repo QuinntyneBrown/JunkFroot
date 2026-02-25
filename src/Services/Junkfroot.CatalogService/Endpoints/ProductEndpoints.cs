@@ -39,6 +39,20 @@ public static class ProductEndpoints
         .Produces<Product>()
         .Produces(404);
 
+        group.MapGet("/by-slug/{slug}", async (string slug, CatalogDbContext db) =>
+        {
+            var product = await db.Products
+                .Include(p => p.Category)
+                .Include(p => p.Ingredients).ThenInclude(pi => pi.Ingredient)
+                .Include(p => p.DietaryTags)
+                .FirstOrDefaultAsync(p => p.Slug == slug && p.IsActive);
+
+            return product is null ? Results.NotFound() : Results.Ok(product);
+        })
+        .WithName("GetProductBySlug")
+        .Produces<Product>()
+        .Produces(404);
+
         group.MapGet("/featured", async (CatalogDbContext db) =>
         {
             var today = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -105,6 +119,41 @@ public static class ProductEndpoints
         .RequireAuthorization("admin")
         .Produces<Product>()
         .Produces(404);
+
+        // ── Seasonal Drops ──────────────────────────────────────────
+        var seasonalGroup = app.MapGroup("/seasonal-drops").WithTags("Seasonal Drops");
+
+        seasonalGroup.MapGet("/", async (CatalogDbContext db) =>
+        {
+            var today = DateOnly.FromDateTime(DateTime.UtcNow);
+            var drops = await db.SeasonalDrops
+                .Include(d => d.FeaturedProducts.Where(p => p.IsActive))
+                    .ThenInclude(p => p.Category)
+                .Include(d => d.FeaturedProducts)
+                    .ThenInclude(p => p.DietaryTags)
+                .Where(d => d.IsActive && d.EndDate >= today)
+                .OrderBy(d => d.StartDate)
+                .ToListAsync();
+
+            return Results.Ok(drops);
+        })
+        .WithName("GetSeasonalDrops")
+        .Produces<List<SeasonalDrop>>();
+
+        // ── Combo Offers ────────────────────────────────────────────
+        var combosGroup = app.MapGroup("/combos").WithTags("Combos");
+
+        combosGroup.MapGet("/", async (CatalogDbContext db) =>
+        {
+            var combos = await db.ComboOffers
+                .Include(c => c.Products).ThenInclude(cp => cp.Product)
+                .Where(c => c.IsActive)
+                .ToListAsync();
+
+            return Results.Ok(combos);
+        })
+        .WithName("GetComboOffers")
+        .Produces<List<ComboOffer>>();
     }
 }
 

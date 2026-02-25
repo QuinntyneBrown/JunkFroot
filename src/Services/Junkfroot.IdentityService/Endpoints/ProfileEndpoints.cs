@@ -80,16 +80,41 @@ public static class ProfileEndpoints
         group.MapPost("/avatar", async (
             HttpRequest httpRequest,
             ClaimsPrincipal user,
-            IdentityDbContext db) =>
+            IdentityDbContext db,
+            Azure.Storage.Blobs.BlobServiceClient blobServiceClient) =>
         {
             var userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var profile = await db.CustomerProfiles.FirstOrDefaultAsync(p => p.UserId == userId);
 
             if (profile is null) return Results.NotFound();
 
-            // In production, upload to Azure Blob Storage / MinIO
-            // For now, store a placeholder URL
-            profile.AvatarUrl = $"/avatars/{userId}/{Guid.NewGuid()}.jpg";
+            var form = await httpRequest.ReadFormAsync();
+            var file = form.Files.GetFile("avatar");
+
+            if (file is null || file.Length == 0)
+                return Results.BadRequest(new { Error = "No file provided" });
+
+            if (file.Length > 5 * 1024 * 1024)
+                return Results.BadRequest(new { Error = "File size exceeds 5MB limit" });
+
+            var allowedTypes = new[] { "image/jpeg", "image/png", "image/webp" };
+            if (!allowedTypes.Contains(file.ContentType))
+                return Results.BadRequest(new { Error = "Only JPEG, PNG, and WebP images are allowed" });
+
+            var containerClient = blobServiceClient.GetBlobContainerClient("avatars");
+            await containerClient.CreateIfNotExistsAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
+
+            var extension = Path.GetExtension(file.FileName) ?? ".jpg";
+            var blobName = $"{userId}/{Guid.NewGuid()}{extension}";
+            var blobClient = containerClient.GetBlobClient(blobName);
+
+            await using var stream = file.OpenReadStream();
+            await blobClient.UploadAsync(stream, new Azure.Storage.Blobs.Models.BlobHttpHeaders
+            {
+                ContentType = file.ContentType
+            });
+
+            profile.AvatarUrl = blobClient.Uri.ToString();
             profile.UpdatedAt = DateTime.UtcNow;
 
             await db.SaveChangesAsync();
@@ -97,6 +122,7 @@ public static class ProfileEndpoints
             return Results.Ok(new { AvatarUrl = profile.AvatarUrl });
         })
         .WithName("UploadAvatar")
+        .Produces(400)
         .Produces(404)
         .DisableAntiforgery();
     }

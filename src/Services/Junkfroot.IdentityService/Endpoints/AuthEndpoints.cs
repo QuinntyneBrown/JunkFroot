@@ -165,7 +165,8 @@ public static class AuthEndpoints
         }
 
         var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(config["Jwt:Key"] ?? "JunkfrootSuperSecretKeyThatShouldBeReplacedInProduction2026!"));
+            Encoding.UTF8.GetBytes(config["Jwt:Key"]
+                ?? throw new InvalidOperationException("JWT signing key is not configured.")));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var expiresAt = DateTime.UtcNow.AddHours(1);

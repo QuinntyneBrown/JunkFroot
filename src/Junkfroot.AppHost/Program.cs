@@ -1,5 +1,8 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
+// ── Secrets / Parameters ────────────────────────────────────────
+var jwtKey = builder.AddParameter("jwt-signing-key", secret: true);
+
 // ── Infrastructure ──────────────────────────────────────────────
 var postgres = builder.AddPostgres("postgres")
     .WithPgAdmin();
@@ -21,25 +24,31 @@ var blobStorage = builder.AddAzureBlobStorage("blobs");
 // ── Services ────────────────────────────────────────────────────
 var identityService = builder.AddProject<Projects.Junkfroot_IdentityService>("identity-service")
     .WithReference(identityDb)
-    .WithReference(redis);
+    .WithReference(redis)
+    .WithReference(blobStorage)
+    .WithEnvironment("Jwt__Key", jwtKey);
 
 var catalogService = builder.AddProject<Projects.Junkfroot_CatalogService>("catalog-service")
     .WithReference(catalogDb)
     .WithReference(redis)
-    .WithReference(blobStorage);
+    .WithReference(blobStorage)
+    .WithEnvironment("Jwt__Key", jwtKey);
 
 var orderService = builder.AddProject<Projects.Junkfroot_OrderService>("order-service")
     .WithReference(ordersDb)
     .WithReference(redis)
-    .WithReference(rabbitmq);
+    .WithReference(rabbitmq)
+    .WithEnvironment("Jwt__Key", jwtKey);
 
 var loyaltyService = builder.AddProject<Projects.Junkfroot_LoyaltyService>("loyalty-service")
     .WithReference(loyaltyDb)
-    .WithReference(rabbitmq);
+    .WithReference(rabbitmq)
+    .WithEnvironment("Jwt__Key", jwtKey);
 
 var locationService = builder.AddProject<Projects.Junkfroot_LocationService>("location-service")
     .WithReference(locationDb)
-    .WithReference(redis);
+    .WithReference(redis)
+    .WithEnvironment("Jwt__Key", jwtKey);
 
 // ── API Gateway ─────────────────────────────────────────────────
 var apiGateway = builder.AddProject<Projects.Junkfroot_ApiGateway>("api-gateway")
@@ -47,7 +56,8 @@ var apiGateway = builder.AddProject<Projects.Junkfroot_ApiGateway>("api-gateway"
     .WithReference(catalogService)
     .WithReference(orderService)
     .WithReference(loyaltyService)
-    .WithReference(locationService);
+    .WithReference(locationService)
+    .WithEnvironment("Jwt__Key", jwtKey);
 
 // ── Angular Frontend ────────────────────────────────────────────
 builder.AddNpmApp("junk-froot-web", "../Web/projects/junk-froot")
