@@ -2,6 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ProductViewModel } from '../../models';
 import { BadgeComponent } from '../../shared/badge/badge.component';
+import { formatTag, getTagVariant } from '../tag-utils';
 
 @Component({
   selector: 'jf-product-card',
@@ -58,25 +59,8 @@ export class ProductCardComponent {
   selected = output<ProductViewModel>();
   addedToCart = output<ProductViewModel>();
 
-  formatTag(tag: string): string {
-    const labels: Record<string, string> = {
-      Vegan: 'Vegan',
-      GlutenFree: 'GF',
-      NutFree: 'NF',
-      DairyFree: 'DF',
-    };
-    return labels[tag] ?? tag;
-  }
-
-  getTagVariant(tag: string): 'vegan' | 'gf' | 'nf' | 'df' | 'default' {
-    const variants: Record<string, 'vegan' | 'gf' | 'nf' | 'df' | 'default'> = {
-      Vegan: 'vegan',
-      GlutenFree: 'gf',
-      NutFree: 'nf',
-      DairyFree: 'df',
-    };
-    return variants[tag] ?? 'default';
-  }
+  formatTag = formatTag;
+  getTagVariant = getTagVariant;
 
   addToCart(event: Event): void {
     event.stopPropagation();

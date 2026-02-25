@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -26,7 +26,7 @@ export class ButtonComponent {
   disabled = input(false);
   clicked = output<MouseEvent>();
 
-  buttonClasses(): string {
+  buttonClasses = computed(() => {
     const base = 'inline-flex items-center justify-center font-body font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
 
     const variants: Record<string, string> = {
@@ -42,5 +42,5 @@ export class ButtonComponent {
     };
 
     return `${base} ${variants[this.variant()]} ${sizes[this.size()]}`;
-  }
+  });
 }

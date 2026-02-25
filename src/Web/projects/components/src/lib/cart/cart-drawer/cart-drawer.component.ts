@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, ElementRef, effect, input, output, viewChild } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CartItemViewModel } from '../../models';
 import { CartItemComponent } from '../cart-item/cart-item.component';
@@ -10,13 +10,14 @@ import { ButtonComponent } from '../../shared/button/button.component';
   imports: [CommonModule, CurrencyPipe, CartItemComponent, ButtonComponent],
   template: `
     @if (isOpen()) {
-      <div class="fixed inset-0 z-50">
+      <div class="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label="Shopping cart">
         <div class="fixed inset-0 bg-black/60" (click)="closed.emit()"></div>
 
         <div class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-jf-dark shadow-xl flex flex-col">
           <div class="flex items-center justify-between p-4 border-b border-jf-gold/20">
             <h2 class="font-display text-2xl text-jf-coconut tracking-wide">YOUR CART</h2>
             <button
+              #closeButton
               class="text-jf-coconut hover:text-jf-gold transition-colors"
               (click)="closed.emit()"
               aria-label="Close cart"
@@ -77,4 +78,14 @@ export class CartDrawerComponent {
   quantityChanged = output<{ itemId: string; quantity: number }>();
   itemRemoved = output<string>();
   checkoutClicked = output<void>();
+
+  private readonly closeButton = viewChild<ElementRef>('closeButton');
+
+  constructor() {
+    effect(() => {
+      if (this.isOpen()) {
+        setTimeout(() => this.closeButton()?.nativeElement.focus());
+      }
+    });
+  }
 }

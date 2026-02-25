@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { PunchCardComponent, RewardsListComponent, LoyaltyCardViewModel, RewardViewModel } from '@junkfroot/components';
-import { LoyaltyApiService } from '@junkfroot/api';
+import { Component, inject, OnInit } from '@angular/core';
+import { PunchCardComponent, RewardsListComponent } from '@junkfroot/components';
+import { LoyaltyStore } from '../../store/loyalty.store';
 
 @Component({
   selector: 'app-loyalty',
@@ -11,10 +11,10 @@ import { LoyaltyApiService } from '@junkfroot/api';
       <h1 class="font-display text-4xl text-jf-coconut tracking-wider text-center mb-2">FROOT FAM</h1>
       <p class="font-body text-center text-gray-400 mb-8">Your loyalty, rewarded.</p>
 
-      @if (card()) {
+      @if (loyaltyStore.card()) {
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <jf-punch-card [card]="card()!" />
-          <jf-rewards-list [rewards]="rewards()" (redeemed)="onRedeem($event)" />
+          <jf-punch-card [card]="loyaltyStore.card()!" />
+          <jf-rewards-list [rewards]="loyaltyStore.rewards()" (redeemed)="onRedeem($event)" />
         </div>
       }
 
@@ -43,43 +43,14 @@ import { LoyaltyApiService } from '@junkfroot/api';
   `,
 })
 export class LoyaltyComponent implements OnInit {
-  private readonly loyaltyApi = inject(LoyaltyApiService);
-
-  card = signal<LoyaltyCardViewModel | null>(null);
-  rewards = signal<RewardViewModel[]>([]);
+  readonly loyaltyStore = inject(LoyaltyStore);
 
   ngOnInit(): void {
-    this.loyaltyApi.getCard().subscribe({
-      next: (c) => {
-        this.card.set({
-          punches: c.punchCount,
-          punchesRequired: c.totalPunches,
-          referralCode: c.referralCode,
-        });
-      },
-    });
-
-    this.loyaltyApi.getRewards().subscribe({
-      next: (r) => {
-        this.rewards.set(
-          r.map((reward) => ({
-            id: reward.id,
-            name: reward.name,
-            description: reward.description,
-            isRedeemed: !reward.isActive,
-          }))
-        );
-      },
-    });
+    this.loyaltyStore.loadCard();
+    this.loyaltyStore.loadRewards();
   }
 
   onRedeem(rewardId: string): void {
-    this.loyaltyApi.redeemReward(rewardId).subscribe({
-      next: () => {
-        this.rewards.update((rewards) =>
-          rewards.map((r) => (r.id === rewardId ? { ...r, isRedeemed: true } : r))
-        );
-      },
-    });
+    this.loyaltyStore.redeemReward(rewardId);
   }
 }

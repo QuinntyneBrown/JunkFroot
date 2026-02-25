@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { TruckMapComponent, ScheduleCardComponent, ScheduleViewModel } from '@junkfroot/components';
-import { LocationApiService } from '@junkfroot/api';
+import { Component, inject, OnInit } from '@angular/core';
+import { TruckMapComponent, ScheduleCardComponent } from '@junkfroot/components';
+import { LocationStore } from '../../store/location.store';
 
 @Component({
   selector: 'app-find-us',
@@ -13,18 +13,18 @@ import { LocationApiService } from '@junkfroot/api';
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2">
           <jf-truck-map
-            [latitude]="latitude()"
-            [longitude]="longitude()"
-            [address]="address()"
-            [isOperating]="isOperating()"
-            [estimatedClose]="estimatedClose()"
+            [latitude]="locationStore.latitude()"
+            [longitude]="locationStore.longitude()"
+            [address]="locationStore.address()"
+            [isOperating]="locationStore.isOperating()"
+            [estimatedClose]="locationStore.estimatedClose()"
           />
         </div>
 
         <div>
           <h2 class="font-display text-2xl text-jf-coconut tracking-wide mb-4">WEEKLY SCHEDULE</h2>
           <div class="space-y-3">
-            @for (day of schedule(); track day.dayOfWeek) {
+            @for (day of locationStore.schedule(); track day.dayOfWeek) {
               <jf-schedule-card [schedule]="day" />
             }
           </div>
@@ -34,39 +34,10 @@ import { LocationApiService } from '@junkfroot/api';
   `,
 })
 export class FindUsComponent implements OnInit {
-  private readonly locationApi = inject(LocationApiService);
-
-  latitude = signal(0);
-  longitude = signal(0);
-  address = signal('');
-  isOperating = signal(false);
-  estimatedClose = signal('');
-  schedule = signal<ScheduleViewModel[]>([]);
+  readonly locationStore = inject(LocationStore);
 
   ngOnInit(): void {
-    this.locationApi.getCurrentLocation().subscribe({
-      next: (loc) => {
-        this.latitude.set(loc.latitude);
-        this.longitude.set(loc.longitude);
-        this.address.set(loc.address);
-        this.isOperating.set(loc.estimatedCloseTime !== null);
-        this.estimatedClose.set(loc.estimatedCloseTime ?? '');
-      },
-    });
-
-    this.locationApi.getSchedule().subscribe({
-      next: (schedules) => {
-        this.schedule.set(
-          schedules.map((s) => ({
-            dayOfWeek: s.dayOfWeek,
-            location: s.location,
-            address: s.address,
-            openTime: s.openTime,
-            closeTime: s.closeTime,
-            isActive: s.isActive,
-          }))
-        );
-      },
-    });
+    this.locationStore.loadCurrentLocation();
+    this.locationStore.loadSchedule();
   }
 }

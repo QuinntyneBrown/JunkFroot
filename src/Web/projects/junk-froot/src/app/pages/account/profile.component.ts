@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ButtonComponent } from '@junkfroot/components';
 import { AuthApiService, CustomerProfile } from '@junkfroot/api';
 import { AuthStore } from '../../store/auth.store';
@@ -58,6 +59,7 @@ import { AuthStore } from '../../store/auth.store';
 export class ProfileComponent implements OnInit {
   private readonly authApi = inject(AuthApiService);
   private readonly authStore = inject(AuthStore);
+  private readonly router = inject(Router);
 
   profile = signal<CustomerProfile | null>(null);
 
@@ -78,5 +80,6 @@ export class ProfileComponent implements OnInit {
 
   onLogout(): void {
     this.authStore.logout();
+    this.router.navigate(['/']);
   }
 }

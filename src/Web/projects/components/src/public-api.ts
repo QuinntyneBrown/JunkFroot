@@ -25,6 +25,8 @@ export { ShellComponent } from './lib/layout/shell/shell.component';
 export { ProductCardComponent } from './lib/product/product-card/product-card.component';
 export { ProductListComponent } from './lib/product/product-list/product-list.component';
 export { ProductDetailComponent } from './lib/product/product-detail/product-detail.component';
+export { formatTag, getTagVariant } from './lib/product/tag-utils';
+export type { TagVariant } from './lib/product/tag-utils';
 
 /* Cart components */
 export { CartDrawerComponent } from './lib/cart/cart-drawer/cart-drawer.component';

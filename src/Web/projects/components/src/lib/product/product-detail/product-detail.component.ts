@@ -3,6 +3,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ProductViewModel } from '../../models';
 import { BadgeComponent } from '../../shared/badge/badge.component';
 import { ButtonComponent } from '../../shared/button/button.component';
+import { formatTag, getTagVariant } from '../tag-utils';
 
 @Component({
   selector: 'jf-product-detail',
@@ -86,23 +87,6 @@ export class ProductDetailComponent {
   addedToCart = output<ProductViewModel>();
   backClicked = output<void>();
 
-  formatTag(tag: string): string {
-    const labels: Record<string, string> = {
-      Vegan: 'Vegan',
-      GlutenFree: 'GF',
-      NutFree: 'NF',
-      DairyFree: 'DF',
-    };
-    return labels[tag] ?? tag;
-  }
-
-  getTagVariant(tag: string): 'vegan' | 'gf' | 'nf' | 'df' | 'default' {
-    const variants: Record<string, 'vegan' | 'gf' | 'nf' | 'df' | 'default'> = {
-      Vegan: 'vegan',
-      GlutenFree: 'gf',
-      NutFree: 'nf',
-      DairyFree: 'df',
-    };
-    return variants[tag] ?? 'default';
-  }
+  formatTag = formatTag;
+  getTagVariant = getTagVariant;
 }

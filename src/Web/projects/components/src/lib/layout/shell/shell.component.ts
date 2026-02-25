@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { NavComponent } from '../nav/nav.component';
@@ -13,12 +13,12 @@ import { NavComponent } from '../nav/nav.component';
         [cartItemCount]="cartItemCount()"
         [isLoggedIn]="isLoggedIn()"
         (cartToggled)="cartToggled.emit()"
-        (menuToggled)="menuOpen = !menuOpen"
+        (menuToggled)="menuOpen.set(!menuOpen())"
       />
       <jf-nav
-        [isOpen]="menuOpen"
+        [isOpen]="menuOpen()"
         [isLoggedIn]="isLoggedIn()"
-        (closed)="menuOpen = false"
+        (closed)="menuOpen.set(false)"
       />
       <main class="flex-1">
         <ng-content />
@@ -31,5 +31,5 @@ export class ShellComponent {
   cartItemCount = input(0);
   isLoggedIn = input(false);
   cartToggled = output<void>();
-  menuOpen = false;
+  menuOpen = signal(false);
 }

@@ -1,4 +1,4 @@
-import { Component, input, output, OnInit, OnDestroy } from '@angular/core';
+import { Component, computed, input, output, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -32,7 +32,7 @@ export class ToastComponent implements OnInit, OnDestroy {
 
   private timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-  icon(): string {
+  icon = computed(() => {
     const icons: Record<string, string> = {
       success: '\u2713',
       error: '\u2717',
@@ -40,9 +40,9 @@ export class ToastComponent implements OnInit, OnDestroy {
       warning: '\u26A0',
     };
     return icons[this.type()];
-  }
+  });
 
-  toastClasses(): string {
+  toastClasses = computed(() => {
     const base = 'flex items-center justify-between px-4 py-3 rounded-lg shadow-lg min-w-[300px]';
 
     const variants: Record<string, string> = {
@@ -53,7 +53,7 @@ export class ToastComponent implements OnInit, OnDestroy {
     };
 
     return `${base} ${variants[this.type()]}`;
-  }
+  });
 
   ngOnInit(): void {
     if (this.duration() > 0) {

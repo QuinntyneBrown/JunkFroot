@@ -1,4 +1,5 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { AuthApiService, AuthResponse } from '@junkfroot/api';
 import { setAccessToken, getAccessToken, clearAccessToken } from '@junkfroot/api';
 import type { AppUser } from '@junkfroot/api';
@@ -23,24 +24,28 @@ export class AuthStore {
   readonly isLoggedIn = computed(() => !!this.state().token);
   readonly loading = computed(() => this.state().loading);
 
-  login(email: string, password: string): void {
+  login(email: string, password: string): Observable<AuthResponse> {
     this.state.update((s) => ({ ...s, loading: true }));
-    this.authApi.login({ email, password }).subscribe({
-      next: (response) => this.handleAuthResponse(response),
-      error: () => {
-        this.state.update((s) => ({ ...s, loading: false }));
-      },
-    });
+    return this.authApi.login({ email, password }).pipe(
+      tap({
+        next: (response) => this.handleAuthResponse(response),
+        error: () => {
+          this.state.update((s) => ({ ...s, loading: false }));
+        },
+      })
+    );
   }
 
-  register(email: string, password: string, name: string): void {
+  register(email: string, password: string, name: string): Observable<AuthResponse> {
     this.state.update((s) => ({ ...s, loading: true }));
-    this.authApi.register({ email, password, name }).subscribe({
-      next: (response) => this.handleAuthResponse(response),
-      error: () => {
-        this.state.update((s) => ({ ...s, loading: false }));
-      },
-    });
+    return this.authApi.register({ email, password, name }).pipe(
+      tap({
+        next: (response) => this.handleAuthResponse(response),
+        error: () => {
+          this.state.update((s) => ({ ...s, loading: false }));
+        },
+      })
+    );
   }
 
   logout(): void {

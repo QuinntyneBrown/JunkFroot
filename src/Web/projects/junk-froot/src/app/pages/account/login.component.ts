@@ -74,10 +74,12 @@ export class LoginComponent {
   name = '';
 
   onSubmit(): void {
-    if (this.isRegister()) {
-      this.authStore.register(this.email, this.password, this.name);
-    } else {
-      this.authStore.login(this.email, this.password);
-    }
+    const auth$ = this.isRegister()
+      ? this.authStore.register(this.email, this.password, this.name)
+      : this.authStore.login(this.email, this.password);
+
+    auth$.subscribe({
+      next: () => this.router.navigate(['/']),
+    });
   }
 }

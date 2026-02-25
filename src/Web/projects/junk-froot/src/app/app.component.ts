@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { ShellComponent, CartDrawerComponent } from '@junkfroot/components';
 import { CartStore } from './store/cart.store';
 import { AuthStore } from './store/auth.store';
@@ -30,11 +30,13 @@ import { AuthStore } from './store/auth.store';
   `,
 })
 export class AppComponent {
+  private readonly router = inject(Router);
   cartStore = inject(CartStore);
   authStore = inject(AuthStore);
   cartDrawerOpen = signal(false);
 
   onCheckout(): void {
     this.cartDrawerOpen.set(false);
+    this.router.navigate(['/checkout']);
   }
 }
