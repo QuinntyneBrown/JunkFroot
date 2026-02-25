@@ -6,5 +6,23 @@
   },
   "newProjectRoot": "projects",
   "projects": {
+    "@junkfroot/api": {
+      "projectType": "library",
+      "root": "projects/api",
+      "sourceRoot": "projects/api/src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/api/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/api/tsconfig.lib.json"
+            }
+          }
+        }
+      }
+    }
   }
 }
