@@ -55,22 +55,22 @@ public class IdentityDbContext(DbContextOptions<IdentityDbContext> options)
             new AppRole
             {
                 Id = Guid.Parse("d1000001-0000-0000-0000-000000000001"),
-                Name = Roles.Customer,
-                NormalizedName = Roles.Customer.ToUpperInvariant(),
+                Name = Domain.Roles.Customer,
+                NormalizedName = Domain.Roles.Customer.ToUpperInvariant(),
                 Description = "Regular customer - browse, order, manage profile, view loyalty"
             },
             new AppRole
             {
                 Id = Guid.Parse("d1000002-0000-0000-0000-000000000002"),
-                Name = Roles.Operator,
-                NormalizedName = Roles.Operator.ToUpperInvariant(),
+                Name = Domain.Roles.Operator,
+                NormalizedName = Domain.Roles.Operator.ToUpperInvariant(),
                 Description = "Truck operator - manage orders, update location, view analytics"
             },
             new AppRole
             {
                 Id = Guid.Parse("d1000003-0000-0000-0000-000000000003"),
-                Name = Roles.Admin,
-                NormalizedName = Roles.Admin.ToUpperInvariant(),
+                Name = Domain.Roles.Admin,
+                NormalizedName = Domain.Roles.Admin.ToUpperInvariant(),
                 Description = "Full admin access - menu management, user management, reporting"
             }
         );

@@ -60,7 +60,8 @@ export interface SeasonalDrop {
   id: string;
   name: string;
   description: string;
-  products: Product[];
+  imageUrl: string | null;
+  featuredProducts: Product[];
   startDate: string;
   endDate: string;
   isActive: boolean;

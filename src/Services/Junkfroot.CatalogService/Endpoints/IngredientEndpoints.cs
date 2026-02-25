@@ -1,4 +1,5 @@
 using Junkfroot.CatalogService.Data;
+using Junkfroot.CatalogService.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Junkfroot.CatalogService.Endpoints;

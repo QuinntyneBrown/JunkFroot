@@ -19,7 +19,7 @@ import { AuthStore } from './store/auth.store';
 
     <jf-cart-drawer
       [isOpen]="cartDrawerOpen()"
-      [items]="cartStore.items()"
+      [items]="cartStore.itemViewModels()"
       [subtotal]="cartStore.subtotal()"
       [total]="cartStore.total()"
       (closed)="cartDrawerOpen.set(false)"

@@ -17,13 +17,16 @@ export interface TruckLocationUpdate {
 export interface OperatingSchedule {
   id: string;
   dayOfWeek: number;
-  location: string;
+  locationName: string;
   address: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   openTime: string;
   closeTime: string;
-  isActive: boolean;
+  isClosed: boolean;
+  closedReason: string | null;
+  effectiveFrom: string | null;
+  effectiveUntil: string | null;
 }
 
 export interface EventBooking {

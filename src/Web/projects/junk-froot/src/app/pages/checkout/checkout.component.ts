@@ -17,7 +17,7 @@ import { CartStore } from '../../store/cart.store';
         @for (item of cartStore.items(); track item.id) {
           <div class="flex justify-between font-body text-sm text-gray-400 py-2">
             <span>{{ item.productName }} x{{ item.quantity }}</span>
-            <span>{{ item.lineTotal | currency }}</span>
+            <span>{{ item.unitPrice * item.quantity | currency }}</span>
           </div>
         }
         <div class="border-t border-jf-gold/20 mt-4 pt-4 flex justify-between">

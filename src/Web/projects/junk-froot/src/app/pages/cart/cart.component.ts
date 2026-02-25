@@ -19,7 +19,7 @@ import { CartStore } from '../../store/cart.store';
       } @else {
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div class="lg:col-span-2">
-            @for (item of cartStore.items(); track item.id) {
+            @for (item of cartStore.itemViewModels(); track item.id) {
               <jf-cart-item
                 [item]="item"
                 (quantityChanged)="cartStore.updateQuantity($event.itemId, $event.quantity)"

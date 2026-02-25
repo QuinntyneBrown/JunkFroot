@@ -2,10 +2,8 @@ export interface Cart {
   id: string;
   userId: string;
   items: CartItem[];
-  subtotal: number;
-  tax: number;
   total: number;
-  comboDiscount: number;
+  createdAt: string;
   updatedAt: string;
 }
 
@@ -14,10 +12,9 @@ export interface CartItem {
   cartId: string;
   productId: string;
   productName: string;
-  productImageUrl: string;
   unitPrice: number;
   quantity: number;
-  lineTotal: number;
+  customization: string | null;
 }
 
 export interface AddCartItem {

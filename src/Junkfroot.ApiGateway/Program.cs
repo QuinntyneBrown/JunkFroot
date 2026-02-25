@@ -1,6 +1,7 @@
 using System.Text;
-using Junkfroot.ServiceDefaults;
 using System.Threading.RateLimiting;
+using Junkfroot.ServiceDefaults;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);

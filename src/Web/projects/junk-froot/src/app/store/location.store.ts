@@ -28,11 +28,11 @@ export class LocationStore {
   readonly schedule = computed<ScheduleViewModel[]>(() =>
     this.state().schedule.map((s) => ({
       dayOfWeek: s.dayOfWeek,
-      location: s.location,
-      address: s.address,
+      location: s.locationName,
+      address: s.address ?? '',
       openTime: s.openTime,
       closeTime: s.closeTime,
-      isActive: s.isActive,
+      isActive: !s.isClosed,
     }))
   );
 

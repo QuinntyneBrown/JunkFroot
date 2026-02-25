@@ -99,6 +99,27 @@ public static class CartEndpoints
         .Produces<Cart>()
         .Produces(404);
 
+        group.MapPost("/apply-combo", async (ClaimsPrincipal user, OrderDbContext db) =>
+        {
+            var userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var cart = await db.Carts
+                .Include(c => c.Items)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            if (cart is null) return Results.NotFound();
+
+            // Recalculate total (combo discount logic can be extended)
+            cart.Total = cart.Items.Sum(i => i.UnitPrice * i.Quantity);
+            cart.UpdatedAt = DateTime.UtcNow;
+
+            await db.SaveChangesAsync();
+            return Results.Ok(cart);
+        })
+        .WithName("ApplyCombo")
+        .Produces<Cart>()
+        .Produces(404);
+
         group.MapDelete("/items/{id:guid}", async (Guid id, ClaimsPrincipal user, OrderDbContext db) =>
         {
             var userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);

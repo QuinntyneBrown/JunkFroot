@@ -19,7 +19,8 @@ var redis = builder.AddRedis("redis")
 var rabbitmq = builder.AddRabbitMQ("messaging")
     .WithManagementPlugin();
 
-var blobStorage = builder.AddAzureBlobStorage("blobs");
+var storage = builder.AddAzureStorage("storage").RunAsEmulator();
+var blobStorage = storage.AddBlobs("blobs");
 
 // ── Services ────────────────────────────────────────────────────
 var identityService = builder.AddProject<Projects.Junkfroot_IdentityService>("identity-service")
