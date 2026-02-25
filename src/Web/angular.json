@@ -54,6 +54,9 @@
             "index": "projects/junk-froot/src/index.html",
             "browser": "projects/junk-froot/src/main.ts",
             "tsConfig": "projects/junk-froot/tsconfig.app.json",
+            "polyfills": [
+              "zone.js"
+            ],
             "styles": [
               "projects/junk-froot/src/styles.scss"
             ],
