@@ -1,0 +1,220 @@
+- generic [ref=e1]:
+  - generic [ref=e11]:
+    - generic [ref=e13]:
+      - link [ref=e16] [cursor=pointer]:
+        - /url: /
+        - img [ref=e19]
+      - generic [ref=e24]:
+        - link [ref=e26] [cursor=pointer]:
+          - /url: /accounts/login/?next=%2Fthejuicemannnnnn%2F&source=desktop_nav
+          - text: Log In
+        - link [ref=e28] [cursor=pointer]:
+          - /url: /accounts/emailsignup/
+          - text: Sign Up
+    - main [ref=e29]:
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - button [disabled] [ref=e34]:
+            - link [disabled] [ref=e36]:
+              - img [ref=e37]
+          - generic [ref=e38]:
+            - generic [ref=e39]:
+              - heading [level=2] [ref=e41]: thejuicemannnnnn
+              - button [ref=e43] [cursor=pointer]:
+                - img [ref=e45]
+            - generic [ref=e50]: JUICEMAN
+            - list [ref=e52]:
+              - listitem [ref=e53]:
+                - link [ref=e55] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e56]:
+                    - generic [ref=e57]: "7"
+                    - text: posts
+              - listitem [ref=e58]:
+                - link [ref=e60] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e61]:
+                    - generic [ref=e62]: 1,149
+                    - text: followers
+              - listitem [ref=e63]:
+                - link [ref=e65] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e66]:
+                    - generic [ref=e67]: 1,115
+                    - text: following
+            - generic [ref=e69]:
+              - generic [ref=e71]: Entrepreneur
+              - generic [ref=e74]: Job 22:28
+        - menu [ref=e75]:
+          - list [ref=e79]:
+            - listitem [ref=e80]
+            - listitem [ref=e81]
+            - listitem [ref=e82]:
+              - menuitem [ref=e84] [cursor=pointer]:
+                - link [ref=e85]:
+                  - /url: /stories/highlights/18097589089374332/
+                  - button [disabled] [ref=e86]:
+                    - img [ref=e89]
+                - generic [ref=e92]: PapaBanapa 🎥
+            - listitem [ref=e93]:
+              - menuitem [ref=e95] [cursor=pointer]:
+                - link [ref=e96]:
+                  - /url: /stories/highlights/17990441221596589/
+                  - button [disabled] [ref=e97]:
+                    - img [ref=e100]
+                - generic [ref=e103]: Foundation
+            - listitem [ref=e104]:
+              - menuitem [ref=e106] [cursor=pointer]:
+                - link [ref=e107]:
+                  - /url: /stories/highlights/17912549822613102/
+                  - button [disabled] [ref=e108]:
+                    - img [ref=e111]
+                - generic [ref=e114]: Menu
+            - listitem [ref=e115]:
+              - menuitem [ref=e117] [cursor=pointer]:
+                - link [ref=e118]:
+                  - /url: /stories/highlights/18277749886034663/
+                  - button [disabled] [ref=e119]:
+                    - img [ref=e122]
+                - generic [ref=e125]: "#1Natural Drink"
+            - listitem [ref=e126]:
+              - menuitem [ref=e128] [cursor=pointer]:
+                - link [ref=e129]:
+                  - /url: /stories/highlights/17904574640390545/
+                  - button [disabled] [ref=e130]:
+                    - img [ref=e133]
+                - generic [ref=e136]: Very BerryDETOX
+            - listitem [ref=e137]:
+              - menuitem [ref=e139] [cursor=pointer]:
+                - link [ref=e140]:
+                  - /url: /stories/highlights/17912453471216828/
+                  - button [disabled] [ref=e141]:
+                    - img [ref=e144]
+                - generic [ref=e147]: Smoothie Time!
+        - tablist [ref=e149]:
+          - link [ref=e151] [cursor=pointer]:
+            - /url: /thejuicemannnnnn/
+            - img [ref=e153]
+          - link [ref=e164] [cursor=pointer]:
+            - /url: "#"
+            - img [ref=e166]
+          - link [ref=e169] [cursor=pointer]:
+            - /url: "#"
+            - img [ref=e171]
+        - article [ref=e175]:
+          - generic [ref=e177]:
+            - generic [ref=e178]:
+              - link [ref=e180] [cursor=pointer]:
+                - /url: /thejuicemannnnnn/reel/DKLDyi1y6iZ/
+                - img [ref=e183]
+                - generic:
+                  - generic:
+                    - img
+              - link [ref=e186] [cursor=pointer]:
+                - /url: /thejuicemannnnnn/reel/DJg8E59Rtpl/
+                - img [ref=e189]
+                - generic:
+                  - generic:
+                    - img
+              - link [ref=e192] [cursor=pointer]:
+                - /url: /thejuicemannnnnn/reel/DJg4uyFxBHj/
+                - img [ref=e195]
+                - generic:
+                  - generic:
+                    - img
+            - generic [ref=e197]:
+              - link [ref=e199] [cursor=pointer]:
+                - /url: /thejuicemannnnnn/reel/DJg2e-5xFd5/
+                - img [ref=e202]
+                - generic:
+                  - generic:
+                    - img
+              - link [ref=e205] [cursor=pointer]:
+                - /url: /thejuicemannnnnn/reel/DEYGP64yZjT/
+                - img [ref=e208]
+                - generic:
+                  - generic:
+                    - img
+              - link [ref=e211] [cursor=pointer]:
+                - /url: /thejuicemannnnnn/p/DBzIQXFS9EZ/
+                - img [ref=e214]
+            - link [ref=e218] [cursor=pointer]:
+              - /url: /thejuicemannnnnn/reel/DAXcHHBsWRu/
+              - img [ref=e221]
+              - generic:
+                - generic:
+                  - img
+    - contentinfo [ref=e225]:
+      - generic [ref=e226]:
+        - generic [ref=e228]:
+          - link [ref=e230] [cursor=pointer]:
+            - /url: https://about.meta.com/
+            - generic [ref=e231]: Meta
+          - link [ref=e233] [cursor=pointer]:
+            - /url: https://about.instagram.com/
+            - generic [ref=e234]: About
+          - link [ref=e236] [cursor=pointer]:
+            - /url: https://about.instagram.com/blog/
+            - generic [ref=e237]: Blog
+          - link [ref=e239] [cursor=pointer]:
+            - /url: https://about.instagram.com/about-us/careers
+            - generic [ref=e240]: Jobs
+          - link [ref=e242] [cursor=pointer]:
+            - /url: https://help.instagram.com/
+            - generic [ref=e243]: Help
+          - link [ref=e245] [cursor=pointer]:
+            - /url: https://developers.facebook.com/docs/instagram
+            - generic [ref=e246]: API
+          - link [ref=e248] [cursor=pointer]:
+            - /url: /legal/privacy/
+            - generic [ref=e249]: Privacy
+          - link [ref=e251] [cursor=pointer]:
+            - /url: /legal/terms/
+            - generic [ref=e252]: Terms
+          - link [ref=e254] [cursor=pointer]:
+            - /url: /explore/locations/
+            - generic [ref=e255]: Locations
+          - link [ref=e257] [cursor=pointer]:
+            - /url: /web/lite/
+            - generic [ref=e258]: Instagram Lite
+          - link [ref=e260] [cursor=pointer]:
+            - /url: https://www.meta.ai/?utm_source=foa_web_footer
+            - generic [ref=e261]: Meta AI
+          - link [ref=e263] [cursor=pointer]:
+            - /url: https://www.threads.com/
+            - generic [ref=e264]: Threads
+          - link [ref=e266] [cursor=pointer]:
+            - /url: https://www.facebook.com/help/instagram/261704639352628
+            - generic [ref=e267]: Contact Uploading & Non-Users
+          - link [ref=e269] [cursor=pointer]:
+            - /url: /accounts/meta_verified/?entrypoint=web_footer
+            - generic [ref=e270]: Meta Verified
+        - generic [ref=e271]:
+          - generic [ref=e272] [cursor=pointer]:
+            - generic [ref=e273]:
+              - generic [ref=e274]: English
+              - img [ref=e277]
+            - combobox [ref=e279]
+          - generic [ref=e281]: © 2026 Instagram from Meta
+  - dialog [ref=e294]:
+    - generic [ref=e297]:
+      - button "Close" [active] [ref=e299] [cursor=pointer]:
+        - img "Close" [ref=e301]
+      - generic [ref=e307]:
+        - generic [ref=e308]:
+          - link "thejuicemannnnnn's profile picture" [ref=e310]:
+            - img "thejuicemannnnnn's profile picture" [ref=e311]
+          - generic [ref=e313]: See more from thejuicemannnnnn
+          - generic [ref=e315]: See photos, videos and more from JUICEMAN.
+        - generic [ref=e316]:
+          - link "Sign up for Instagram" [ref=e317] [cursor=pointer]:
+            - /url: /accounts/emailsignup/?next=%2Fthejuicemannnnnn%2F
+          - button "Log in" [ref=e318] [cursor=pointer]
+          - generic [ref=e320]:
+            - text: By continuing, you agree to Instagram's
+            - link "Terms of Use" [ref=e321] [cursor=pointer]:
+              - /url: https://help.instagram.com/581066165581870/?locale=en_US
+            - text: and
+            - link "Privacy Policy" [ref=e322] [cursor=pointer]:
+              - /url: https://privacycenter.instagram.com/policy/
+            - text: .

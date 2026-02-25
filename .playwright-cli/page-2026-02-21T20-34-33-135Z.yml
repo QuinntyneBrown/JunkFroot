@@ -1,0 +1,16 @@
+- generic [ref=e402]:
+  - generic [ref=e404]:
+    - link "thejuicemannnnnn's profile picture" [active] [ref=e406] [cursor=pointer]:
+      - /url: /thejuicemannnnnn/
+      - img "thejuicemannnnnn's profile picture" [ref=e407]
+    - generic [ref=e408]:
+      - generic [ref=e411]: View more highlights
+      - generic [ref=e413]: Sign up to see more story highlights from thejuicemannnnnn.
+      - link "Sign Up" [ref=e415] [cursor=pointer]:
+        - /url: /accounts/emailsignup/?next=%2Fstories%2Fhighlights%2F18097589089374332%2F
+      - button "Log in" [ref=e417] [cursor=pointer]
+  - link "Instagram" [ref=e419] [cursor=pointer]:
+    - /url: /
+    - img "Instagram" [ref=e420]
+  - button "Close" [ref=e422] [cursor=pointer]:
+    - img "Close" [ref=e424]
