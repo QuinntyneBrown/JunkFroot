@@ -7,8 +7,8 @@ import { Order, OrderStatus, PaymentRequest } from '../models/order.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrderApiService {
-  private http = inject(HttpClient);
-  private baseUrl = inject(API_BASE_URL);
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = inject(API_BASE_URL);
 
   getCart(): Observable<Cart> {
     return this.http.get<Cart>(`${this.baseUrl}/api/orders/cart`);

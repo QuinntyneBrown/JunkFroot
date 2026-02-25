@@ -6,8 +6,8 @@ import { Category, ComboOffer, Product } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class CatalogApiService {
-  private http = inject(HttpClient);
-  private baseUrl = inject(API_BASE_URL);
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = inject(API_BASE_URL);
 
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.baseUrl}/api/catalog/products`);

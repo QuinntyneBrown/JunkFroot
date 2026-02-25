@@ -13,8 +13,8 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class LoyaltyApiService {
-  private http = inject(HttpClient);
-  private baseUrl = inject(API_BASE_URL);
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = inject(API_BASE_URL);
 
   getCard(): Observable<LoyaltyCard> {
     return this.http.get<LoyaltyCard>(`${this.baseUrl}/api/loyalty/card`);
