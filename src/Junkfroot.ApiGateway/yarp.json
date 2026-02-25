@@ -1,0 +1,60 @@
+{
+  "ReverseProxy": {
+    "Routes": {
+      "catalog-route": {
+        "ClusterId": "catalog-cluster",
+        "Match": { "Path": "/api/catalog/{**catch-all}" },
+        "Transforms": [{ "PathRemovePrefix": "/api/catalog" }]
+      },
+      "orders-route": {
+        "ClusterId": "orders-cluster",
+        "AuthorizationPolicy": "authenticated",
+        "Match": { "Path": "/api/orders/{**catch-all}" },
+        "Transforms": [{ "PathRemovePrefix": "/api/orders" }]
+      },
+      "identity-route": {
+        "ClusterId": "identity-cluster",
+        "Match": { "Path": "/api/identity/{**catch-all}" },
+        "Transforms": [{ "PathRemovePrefix": "/api/identity" }]
+      },
+      "loyalty-route": {
+        "ClusterId": "loyalty-cluster",
+        "AuthorizationPolicy": "authenticated",
+        "Match": { "Path": "/api/loyalty/{**catch-all}" },
+        "Transforms": [{ "PathRemovePrefix": "/api/loyalty" }]
+      },
+      "location-route": {
+        "ClusterId": "location-cluster",
+        "Match": { "Path": "/api/location/{**catch-all}" },
+        "Transforms": [{ "PathRemovePrefix": "/api/location" }]
+      }
+    },
+    "Clusters": {
+      "catalog-cluster": {
+        "Destinations": {
+          "destination1": { "Address": "https+http://catalog-service" }
+        }
+      },
+      "orders-cluster": {
+        "Destinations": {
+          "destination1": { "Address": "https+http://order-service" }
+        }
+      },
+      "identity-cluster": {
+        "Destinations": {
+          "destination1": { "Address": "https+http://identity-service" }
+        }
+      },
+      "loyalty-cluster": {
+        "Destinations": {
+          "destination1": { "Address": "https+http://loyalty-service" }
+        }
+      },
+      "location-cluster": {
+        "Destinations": {
+          "destination1": { "Address": "https+http://location-service" }
+        }
+      }
+    }
+  }
+}
