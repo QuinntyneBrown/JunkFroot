@@ -13,9 +13,14 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class LocationApiService {
+<<<<<<< HEAD
   private http = inject(HttpClient);
   private baseUrl = inject(API_BASE_URL);
   private hubConnection: signalR.HubConnection | null = null;
+=======
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = inject(API_BASE_URL);
+>>>>>>> 30a9abd24d741c9d3e6e37f237b78bc0bc8d6ab7
 
   getCurrentLocation(): Observable<TruckLocation> {
     return this.http.get<TruckLocation>(`${this.baseUrl}/api/location/truck/current`);
